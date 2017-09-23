@@ -5,13 +5,10 @@
  */
 package lightsout;
 
-import javax.swing.*;
-import java.awt.*;
-
 /**
  *
  * @author cspanw74
  */
-public class LightFrame extends JFrame  {
-    LightGame thisGame = new LightGame (this);
+public class LightGame {
+    
 }
