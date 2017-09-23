@@ -5,10 +5,17 @@
  */
 package lightsout;
 
+//import java.awt.event.*;
+
 /**
  *
  * @author cspanw74
  */
-public class LightGame {
+public class LightGame     {
+    LightFrame gui;
+    
+    public LightGame (LightFrame in)    {
+        this.gui = in;
+    }
     
 }
