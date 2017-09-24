@@ -20,10 +20,9 @@ import javax.imageio.ImageIO;
  */
 public class LightFrame extends JFrame  {
     LightGame thisGame = new LightGame (this);
-    final int WIDTH = 10;
-    final int HEIGHT = 6;
-    JButton[][] buttons = new JButton[WIDTH][HEIGHT];
+    JButton[][] buttons = new JButton[thisGame.WIDTH][thisGame.HEIGHT];
     final Random rand = new Random();
+    boolean onOff;
     public String btnText = "";
     
     Icon imgOn  = new ImageIcon(getClass().getResource("/images/button-on.jpg"));
@@ -35,17 +34,21 @@ public class LightFrame extends JFrame  {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         JPanel gameWindow = new JPanel();
-        GridLayout buttonLayout = new GridLayout(HEIGHT, WIDTH);
+        GridLayout buttonLayout = new GridLayout(thisGame.HEIGHT, thisGame.WIDTH);
         gameWindow.setLayout(buttonLayout);
         add(gameWindow);
         
-        for (int i = 0; i < WIDTH; i++)    {
-            for (int j = 0; j < HEIGHT; j++)    {
-                btnText = rand.nextBoolean() ? "X" : "O";
+        for (int i = 0; i < thisGame.WIDTH; i++)    {
+            for (int j = 0; j < thisGame.HEIGHT; j++)    {
+                onOff = rand.nextBoolean();
+                btnText = onOff ? "+" : "";
+                thisGame.btnStates[i][j] = onOff;
                 JButton nextBtn = new JButton(btnText);
+                nextBtn.putClientProperty("column", i);
+                nextBtn.putClientProperty("row", j);
 //                nextBtn.setContentAreaFilled(false);
 //                nextBtn.setIcon(imgOn);
-    //            nextBtn.addActionListener(thisGame);
+                nextBtn.addActionListener(thisGame);
                 gameWindow.add(nextBtn);
                 buttons[i][j] = nextBtn;
             }
