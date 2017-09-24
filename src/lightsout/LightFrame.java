@@ -7,6 +7,7 @@ package lightsout;
 
 import javax.swing.*;
 import java.awt.*;
+import static java.awt.Color.RED;
 import java.awt.event.*;
 import java.io.IOException;
 import java.util.Random;
@@ -44,6 +45,8 @@ public class LightFrame extends JFrame  {
                 btnText = onOff ? "+" : "";
                 thisGame.btnStates[i][j] = onOff;
                 JButton nextBtn = new JButton(btnText);
+//                nextBtn.setBackground(RED);
+//                nextBtn.setOpaque(onOff);
                 nextBtn.putClientProperty("row", i);
                 nextBtn.putClientProperty("column", j);
 //                nextBtn.setContentAreaFilled(false);

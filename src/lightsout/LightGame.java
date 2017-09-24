@@ -22,6 +22,7 @@ public class LightGame implements ActionListener     {
     JButton clicked;
     int btnRow, btnColumn;
     boolean[][] btnStates = new boolean[HEIGHT][WIDTH];
+    int moves = 0;
     
     public LightGame (LightFrame in)    {
         this.gui = in;
@@ -35,14 +36,16 @@ public class LightGame implements ActionListener     {
     }
     
     public void actionPerformed(ActionEvent event)  {
+        moves++;
         clicked = (JButton) event.getSource();
         btnRow = (int)clicked.getClientProperty("row");
         btnColumn = (int)clicked.getClientProperty("column");
         changeStates(btnRow, btnColumn);
+        checkWin();
     }
     
     private void changeStates (int row, int column) {
-//        changeOneState(row, column);
+        changeOneState(row, column);
         if (row > 0)            changeOneState(row - 1, column);
         if (row < HEIGHT - 1)   changeOneState(row + 1, column);
         if (column > 0)         changeOneState(row, column - 1);
@@ -51,10 +54,19 @@ public class LightGame implements ActionListener     {
     
     private void changeOneState (int row, int column) {
         btnStates[row][column] = !btnStates[row][column];
-        System.out.println("C" + column + ", R" + row + ": " + btnStates[row][column]);
+//        System.out.println("C" + column + ", R" + row + ": " + btnStates[row][column]);
         if (btnStates[row][column])
             gui.buttons[row][column].setText("+");
         else
             gui.buttons[row][column].setText("");
+    }
+    
+    private void checkWin ()    {
+        for (int i = 0; i < HEIGHT; i++)    {
+            for (int j = 0; j < WIDTH; j++) {
+                if (btnStates[i][j]) return;
+            }
+        }
+        System.out.println ("Game won in " + moves + " moves");
     }
 }
