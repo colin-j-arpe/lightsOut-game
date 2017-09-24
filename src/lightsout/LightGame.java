@@ -17,11 +17,11 @@ import javax.swing.*;
  */
 public class LightGame implements ActionListener     {
     LightFrame gui;
-    final int WIDTH = 10;
-    final int HEIGHT = 6;
+    final int HEIGHT = 3;
+    final int WIDTH = 4;
     JButton clicked;
-    int btnColumn, btnRow;
-    boolean[][] btnStates = new boolean[WIDTH][HEIGHT];
+    int btnRow, btnColumn;
+    boolean[][] btnStates = new boolean[HEIGHT][WIDTH];
     
     public LightGame (LightFrame in)    {
         this.gui = in;
@@ -36,24 +36,25 @@ public class LightGame implements ActionListener     {
     
     public void actionPerformed(ActionEvent event)  {
         clicked = (JButton) event.getSource();
-        btnColumn = (int)clicked.getClientProperty("column");
         btnRow = (int)clicked.getClientProperty("row");
-        changeStates(btnColumn, btnRow);
+        btnColumn = (int)clicked.getClientProperty("column");
+        changeStates(btnRow, btnColumn);
     }
     
-    private void changeStates (int column, int row) {
-        changeOneState(column, row);
-        if (column > 0)             changeOneState(column - 1, row);
-        if (column < gui.WIDTH - 1) changeOneState(column + 1, row);
-        if (row > 0)                changeOneState(column, row - 1);
-        if (row < gui.HEIGHT - 1)   changeOneState(column, row + 1);
+    private void changeStates (int row, int column) {
+//        changeOneState(row, column);
+        if (row > 0)            changeOneState(row - 1, column);
+        if (row < HEIGHT - 1)   changeOneState(row + 1, column);
+        if (column > 0)         changeOneState(row, column - 1);
+        if (column < WIDTH - 1) changeOneState(row, column + 1);
     }
     
-    private void changeOneState (int column, int row) {
-        btnStates[column][row] = !btnStates[column][row];
-        if (btnStates[column][row])
-            gui.buttons[column][row].setText("+");
+    private void changeOneState (int row, int column) {
+        btnStates[row][column] = !btnStates[row][column];
+        System.out.println("C" + column + ", R" + row + ": " + btnStates[row][column]);
+        if (btnStates[row][column])
+            gui.buttons[row][column].setText("+");
         else
-            gui.buttons[column][row].setText("");
+            gui.buttons[row][column].setText("");
     }
 }

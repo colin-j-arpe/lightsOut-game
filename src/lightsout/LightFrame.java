@@ -20,7 +20,7 @@ import javax.imageio.ImageIO;
  */
 public class LightFrame extends JFrame  {
     LightGame thisGame = new LightGame (this);
-    JButton[][] buttons = new JButton[thisGame.WIDTH][thisGame.HEIGHT];
+    JButton[][] buttons = new JButton[thisGame.HEIGHT][thisGame.WIDTH];
     final Random rand = new Random();
     boolean onOff;
     public String btnText = "";
@@ -38,14 +38,14 @@ public class LightFrame extends JFrame  {
         gameWindow.setLayout(buttonLayout);
         add(gameWindow);
         
-        for (int i = 0; i < thisGame.WIDTH; i++)    {
-            for (int j = 0; j < thisGame.HEIGHT; j++)    {
+        for (int i = 0; i < thisGame.HEIGHT; i++)    {
+            for (int j = 0; j < thisGame.WIDTH; j++)    {
                 onOff = rand.nextBoolean();
                 btnText = onOff ? "+" : "";
                 thisGame.btnStates[i][j] = onOff;
                 JButton nextBtn = new JButton(btnText);
-                nextBtn.putClientProperty("column", i);
-                nextBtn.putClientProperty("row", j);
+                nextBtn.putClientProperty("row", i);
+                nextBtn.putClientProperty("column", j);
 //                nextBtn.setContentAreaFilled(false);
 //                nextBtn.setIcon(imgOn);
                 nextBtn.addActionListener(thisGame);
