@@ -18,8 +18,8 @@ import javax.swing.*;
  */
 public class LightGame implements ActionListener     {
     LightFrame gui;
-    final int HEIGHT = 4;
-    final int WIDTH = 6;
+    final int HEIGHT = 2;
+    final int WIDTH = 3;
     JButton clicked;
     int btnRow, btnColumn;
     boolean[][] btnStates = new boolean[HEIGHT][WIDTH];
@@ -69,5 +69,9 @@ public class LightGame implements ActionListener     {
             }
         }
         System.out.println ("Game won in " + moves + " moves");
+        JOptionPane.showMessageDialog(gui, 
+                "You solved the puzzle in " + moves + " moves.", 
+                "Congratulations!", 
+                JOptionPane.PLAIN_MESSAGE);
     }
 }
