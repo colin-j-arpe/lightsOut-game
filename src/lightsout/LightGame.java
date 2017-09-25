@@ -57,9 +57,9 @@ public class LightGame implements ActionListener     {
         btnStates[row][column] = !btnStates[row][column];
 //        System.out.println("C" + column + ", R" + row + ": " + btnStates[row][column]);
         if (btnStates[row][column])
-            gui.buttons[row][column].setBackground(Color.RED);
+            gui.thisBoard.buttons[row][column].setBackground(Color.RED);
         else
-            gui.buttons[row][column].setBackground(Color.LIGHT_GRAY);
+            gui.thisBoard.buttons[row][column].setBackground(Color.LIGHT_GRAY);
     }
     
     private void checkWin ()    {
