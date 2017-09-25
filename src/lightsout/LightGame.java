@@ -7,6 +7,7 @@ package lightsout;
 
 //import java.awt.event.*;
 
+import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -17,8 +18,8 @@ import javax.swing.*;
  */
 public class LightGame implements ActionListener     {
     LightFrame gui;
-    final int HEIGHT = 3;
-    final int WIDTH = 4;
+    final int HEIGHT = 4;
+    final int WIDTH = 6;
     JButton clicked;
     int btnRow, btnColumn;
     boolean[][] btnStates = new boolean[HEIGHT][WIDTH];
@@ -56,9 +57,9 @@ public class LightGame implements ActionListener     {
         btnStates[row][column] = !btnStates[row][column];
 //        System.out.println("C" + column + ", R" + row + ": " + btnStates[row][column]);
         if (btnStates[row][column])
-            gui.buttons[row][column].setText("+");
+            gui.buttons[row][column].setBackground(Color.RED);
         else
-            gui.buttons[row][column].setText("");
+            gui.buttons[row][column].setBackground(Color.LIGHT_GRAY);
     }
     
     private void checkWin ()    {
