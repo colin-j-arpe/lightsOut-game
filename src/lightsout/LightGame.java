@@ -37,6 +37,7 @@ public class LightGame implements ActionListener     {
         btnRow = (int)clicked.getClientProperty("row");
         btnColumn = (int)clicked.getClientProperty("column");
         changeStates(btnRow, btnColumn);
+System.out.println(moves + ": " + btnRow + ", " + btnColumn + ": " + btnStates[btnRow][btnColumn]);
         checkWin();
     }
     

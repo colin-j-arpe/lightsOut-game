@@ -23,42 +23,51 @@ import java.util.Random;
 public class LightFrame extends JFrame  {
     public int height = 3;
     public int width = 4;
-    LightGame thisGame = new LightGame (this, height, width);
-    JPanel gameWindow = new JPanel();
-    MenuPanel thisMenu = new MenuPanel(this);
+    LightGame thisGame;
+    JPanel gameWindow;
+    MenuPanel thisMenu;
     BoardPanel thisBoard;
     
     
     public LightFrame() {
         super("lightsOut!");
+System.out.println("start constructor");
+        
         setSize(500,300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setJMenuBar(thisMenu.menuBar);
         
-        BorderLayout windowLayout = new BorderLayout();
-        gameWindow.setLayout(windowLayout);
-        gameWindow.add(thisMenu, BorderLayout.PAGE_START);
         newBoard();
-        add(gameWindow);
         
-        setVisible(true);
+System.out.println("end constructor");
     }
     
     public void newBoard()   {
+        thisGame = new LightGame (this, height, width);
+
+        gameWindow = new JPanel();
+        thisMenu = new MenuPanel(this);
+        setJMenuBar(thisMenu.menuBar);
+
         thisBoard = new BoardPanel (height, width, thisGame.btnStates);
         for (int i = 0; i < thisGame.height; i++)   {
             for (int j = 0; j < thisGame.width; j++)    {
                 thisBoard.buttons[i][j].addActionListener(thisGame);
             }
-        gameWindow.add(thisBoard, BorderLayout.CENTER);
         }
+
+        BorderLayout windowLayout = new BorderLayout();
+        gameWindow.setLayout(windowLayout);
+        gameWindow.add(thisMenu, BorderLayout.PAGE_START);
+        gameWindow.add(thisBoard, BorderLayout.CENTER);
+        add(gameWindow);
+        setVisible(true);
     }
     
     public void restart()   {
 //        LightFrame newGame = new LightFrame();
-//        gameWindow.remove(thisBoard);
-        thisGame = new LightGame (this, height, width);
+        remove(gameWindow);
         newBoard();
+//        thisGame = new LightGame (this, height, width);
 //        thisFrame.thisBoard = new BoardPanel (height, width, thisFrame.thisGame.btnStates);
 //        gameWindow.add(thisFrame.thisBoard, BorderLayout.CENTER);
     }
@@ -111,8 +120,9 @@ class MenuPanel extends JPanel implements ActionListener  {
             thisFrame.height = parseInt(dimensions[1]);
             thisFrame.width = parseInt(dimensions[0]);
 System.out.println(selection);
-            thisFrame.gameWindow.remove(thisFrame.thisBoard);
-//            thisFrame.restart();
+//            thisFrame.gameWindow.remove(thisFrame.thisBoard);
+System.out.println("here");
+            thisFrame.restart();
         }
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
