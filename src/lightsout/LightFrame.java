@@ -92,12 +92,22 @@ class MenuPanel extends JPanel implements ActionListener  {
         }
         gameMenu.add(subMenu);
 
-//      to come: game style selection, help menu
+//      to come: game style selection
         subMenu = new JMenu("Game style");
         subMenu.setMnemonic(KeyEvent.VK_S);
+
         gameMenu = new JMenu("Help");
         gameMenu.setMnemonic(KeyEvent.VK_H);
         menuBar.add(gameMenu);
+        
+        menuItem = new JMenuItem("Instructions", KeyEvent.VK_I);
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.CTRL_MASK));
+        menuItem.addActionListener(this);
+        gameMenu.add(menuItem);
+        
+        menuItem = new JMenuItem("About", KeyEvent.VK_A);
+        menuItem.addActionListener(this);
+        gameMenu.add(menuItem);
         
         showMoves = new JLabel("Number of moves: ");
         menuBar.add(Box.createHorizontalGlue());
@@ -113,6 +123,10 @@ class MenuPanel extends JPanel implements ActionListener  {
         String selection = event.getActionCommand();
         if (selection.equals("New game"))
                 thisFrame.restart();
+        else if (selection.equals("Instructions"))
+                showInstructions();
+        else if (selection.equals("About"))
+                showAbout();
         else    {
             String[] dimensions = selection.split("x");
             thisFrame.height = parseInt(dimensions[1]);
