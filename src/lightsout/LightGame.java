@@ -18,23 +18,18 @@ import javax.swing.*;
  */
 public class LightGame implements ActionListener     {
     LightFrame gui;
-    final int HEIGHT = 3;
-    final int WIDTH = 4;
+    int height, width;
     JButton clicked;
     int btnRow, btnColumn;
-    boolean[][] btnStates = new boolean[HEIGHT][WIDTH];
+    boolean[][] btnStates;
     int moves = 0;
     
-    public LightGame (LightFrame in)    {
+    public LightGame (LightFrame in, int heightIn, int widthIn)    {
         this.gui = in;
-//        final int WIDTH = gui.WIDTH;
-//        final int HEIGHT = gui.HEIGHT;
-//        for (int i = 0; i < gui.WIDTH; i++) {
-//            for (int j = 0; j < gui.HEIGHT; j++)    {
-//                btnStates[i][j] = gui.buttons[i][j].getText().equals("+");
-//            }
-//        }
-    }
+        height = heightIn;
+        width = widthIn;
+        btnStates = new boolean[height][width];
+        }
     
     public void actionPerformed(ActionEvent event)  {
         moves++;
@@ -48,9 +43,9 @@ public class LightGame implements ActionListener     {
     private void changeStates (int row, int column) {
         changeOneState(row, column);
         if (row > 0)            changeOneState(row - 1, column);
-        if (row < HEIGHT - 1)   changeOneState(row + 1, column);
+        if (row < height - 1)   changeOneState(row + 1, column);
         if (column > 0)         changeOneState(row, column - 1);
-        if (column < WIDTH - 1) changeOneState(row, column + 1);
+        if (column < width - 1) changeOneState(row, column + 1);
     }
     
     private void changeOneState (int row, int column) {
@@ -63,8 +58,8 @@ public class LightGame implements ActionListener     {
     }
     
     private void checkWin ()    {
-        for (int i = 0; i < HEIGHT; i++)    {
-            for (int j = 0; j < WIDTH; j++) {
+        for (int i = 0; i < height; i++)    {
+            for (int j = 0; j < width; j++) {
                 if (btnStates[i][j]) return;
             }
         }
@@ -73,8 +68,8 @@ public class LightGame implements ActionListener     {
                 "You solved the puzzle in " + moves + " moves.", 
                 "Congratulations!", 
                 JOptionPane.PLAIN_MESSAGE);
-        for (int i = 0; i < HEIGHT; i++)    {
-            for (int j = 0; j < WIDTH, j++) {
+        for (int i = 0; i < height; i++)    {
+            for (int j = 0; j < width; j++) {
                 gui.thisBoard.buttons[i][j].setEnabled(false);
             }
         }

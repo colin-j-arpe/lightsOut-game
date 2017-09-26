@@ -8,6 +8,7 @@ package lightsout;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import static java.lang.Integer.parseInt;
 //import java.awt.event.KeyEvent;
 //import java.io.IOException;
 import java.util.Random;
@@ -20,9 +21,12 @@ import java.util.Random;
  * @author cspanw74
  */
 public class LightFrame extends JFrame  {
-    LightGame thisGame = new LightGame (this);
+    public int height = 3;
+    public int width = 4;
+    LightGame thisGame = new LightGame (this, height, width);
+    JPanel gameWindow = new JPanel();
     MenuPanel thisMenu = new MenuPanel(this);
-    BoardPanel thisBoard = new BoardPanel (thisGame.HEIGHT, thisGame.WIDTH, thisGame.btnStates);
+    BoardPanel thisBoard;
     
     
     public LightFrame() {
@@ -31,28 +35,45 @@ public class LightFrame extends JFrame  {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setJMenuBar(thisMenu.menuBar);
         
-        JPanel gameWindow = new JPanel();
         BorderLayout windowLayout = new BorderLayout();
         gameWindow.setLayout(windowLayout);
         gameWindow.add(thisMenu, BorderLayout.PAGE_START);
-        gameWindow.add(thisBoard, BorderLayout.CENTER);
+        newBoard();
         add(gameWindow);
         
-        for (int i = 0; i < thisGame.HEIGHT; i++)   {
-            for (int j = 0; j < thisGame.WIDTH; j++)    {
+        setVisible(true);
+    }
+    
+    public void newBoard()   {
+        thisBoard = new BoardPanel (height, width, thisGame.btnStates);
+        for (int i = 0; i < thisGame.height; i++)   {
+            for (int j = 0; j < thisGame.width; j++)    {
                 thisBoard.buttons[i][j].addActionListener(thisGame);
             }
+        gameWindow.add(thisBoard, BorderLayout.CENTER);
         }
-        
-        setVisible(true);
+    }
+    
+    public void restart()   {
+//        LightFrame newGame = new LightFrame();
+//        gameWindow.remove(thisBoard);
+        thisGame = new LightGame (this, height, width);
+        newBoard();
+//        thisFrame.thisBoard = new BoardPanel (height, width, thisFrame.thisGame.btnStates);
+//        gameWindow.add(thisFrame.thisBoard, BorderLayout.CENTER);
     }
 }
 
 class MenuPanel extends JPanel implements ActionListener  {
+    LightFrame thisFrame;
     JMenuBar menuBar = new JMenuBar();
+    String[] boardSizes = new String[] {
+        "3x2", "4x3", "6x4", "8x5", "10x6"
+    };
     
     public MenuPanel(LightFrame frame) {
         super();
+        thisFrame = frame;
         FlowLayout menuLayout = new FlowLayout(FlowLayout.LEFT);
         setLayout(menuLayout);
         
@@ -62,25 +83,17 @@ class MenuPanel extends JPanel implements ActionListener  {
 
         JMenuItem menuItem = new JMenuItem("New game", KeyEvent.VK_N);
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+        menuItem.addActionListener(this);
         gameMenu.add(menuItem);
 
         JMenu subMenu = new JMenu("Board size");
         subMenu.setMnemonic(KeyEvent.VK_B);
-        menuItem = new JMenuItem("3x2");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
-        subMenu.add(menuItem);
-        menuItem = new JMenuItem("4x3");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
-        subMenu.add(menuItem);
-        menuItem = new JMenuItem("6x4");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
-        subMenu.add(menuItem);
-        menuItem = new JMenuItem("8x5");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_4, ActionEvent.ALT_MASK));
-        subMenu.add(menuItem);
-        menuItem = new JMenuItem("10x6");
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_5, ActionEvent.ALT_MASK));
-        subMenu.add(menuItem);
+        for (int i = 0; i < boardSizes.length; i++) {
+            menuItem = new JMenuItem(boardSizes[i]);
+            menuItem.setAccelerator(KeyStroke.getKeyStroke((KeyEvent.VK_1 + i), ActionEvent.ALT_MASK));
+            menuItem.addActionListener(this);
+            subMenu.add(menuItem);
+        }
         gameMenu.add(subMenu);
 
 //        subMenu = new JMenu("Game style", KeyEvent.VK_G);
@@ -90,7 +103,18 @@ class MenuPanel extends JPanel implements ActionListener  {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String selection = event.getActionCommand();
+        if (selection.equals("New game"))
+                thisFrame.restart();
+        else    {
+            String[] dimensions = selection.split("x");
+            thisFrame.height = parseInt(dimensions[1]);
+            thisFrame.width = parseInt(dimensions[0]);
+System.out.println(selection);
+            thisFrame.gameWindow.remove(thisFrame.thisBoard);
+//            thisFrame.restart();
+        }
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 
@@ -98,7 +122,6 @@ class BoardPanel extends JPanel {
     JButton[][] buttons;
     final Random rand = new Random();
     boolean onOff;
-    public String btnText = "";
     
     public BoardPanel(int height, int width, boolean btnStates[][])    {
         super();
@@ -110,15 +133,11 @@ class BoardPanel extends JPanel {
         for (int i = 0; i < height; i++)    {
             for (int j = 0; j < width; j++)    {
                 onOff = rand.nextBoolean();
-//                btnText = onOff ? "+" : "";
                 btnStates[i][j] = onOff;
                 JButton nextBtn = new JButton();
                 nextBtn.setBackground((onOff ? Color.RED : Color.LIGHT_GRAY));
-//                nextBtn.setOpaque(onOff);
                 nextBtn.putClientProperty("row", i);
                 nextBtn.putClientProperty("column", j);
-//                nextBtn.setContentAreaFilled(false);
-//                nextBtn.setIcon(imgOn);
                 nextBtn.setEnabled(true);
                 add(nextBtn);
                 buttons[i][j] = nextBtn;
