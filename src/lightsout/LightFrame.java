@@ -62,6 +62,7 @@ public class LightFrame extends JFrame  {
 class MenuPanel extends JPanel implements ActionListener  {
     LightFrame thisFrame;
     JMenuBar menuBar = new JMenuBar();
+    JLabel showMoves;
     String[] boardSizes = new String[] {
         "3x2", "4x3", "6x4", "8x5", "10x6"
     };
@@ -96,6 +97,13 @@ class MenuPanel extends JPanel implements ActionListener  {
         subMenu.setMnemonic(KeyEvent.VK_S);
         gameMenu = new JMenu("Help");
         gameMenu.setMnemonic(KeyEvent.VK_H);
+        menuBar.add(gameMenu);
+        
+        showMoves = new JLabel("Number of moves: ");
+        menuBar.add(Box.createHorizontalGlue());
+        menuBar.add(showMoves);
+        showMoves = new JLabel("0");
+        menuBar.add(showMoves);
 
         add(menuBar);
     }

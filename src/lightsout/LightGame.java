@@ -31,6 +31,7 @@ public class LightGame implements ActionListener     {
     
     public void actionPerformed(ActionEvent event)  {
         moves++;
+        gui.thisMenu.showMoves.setText(Integer.toString(moves));
         clicked = (JButton) event.getSource();
         btnRow = (int)clicked.getClientProperty("row");
         btnColumn = (int)clicked.getClientProperty("column");
