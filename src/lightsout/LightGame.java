@@ -5,8 +5,6 @@
  */
 package lightsout;
 
-//import java.awt.event.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -37,7 +35,6 @@ public class LightGame implements ActionListener     {
         btnRow = (int)clicked.getClientProperty("row");
         btnColumn = (int)clicked.getClientProperty("column");
         changeStates(btnRow, btnColumn);
-System.out.println(moves + ": " + btnRow + ", " + btnColumn + ": " + btnStates[btnRow][btnColumn]);
         checkWin();
     }
     
@@ -51,7 +48,6 @@ System.out.println(moves + ": " + btnRow + ", " + btnColumn + ": " + btnStates[b
     
     private void changeOneState (int row, int column) {
         btnStates[row][column] = !btnStates[row][column];
-//        System.out.println("C" + column + ", R" + row + ": " + btnStates[row][column]);
         if (btnStates[row][column])
             gui.thisBoard.buttons[row][column].setBackground(Color.RED);
         else
@@ -64,7 +60,6 @@ System.out.println(moves + ": " + btnRow + ", " + btnColumn + ": " + btnStates[b
                 if (btnStates[i][j]) return;
             }
         }
-//        System.out.println ("Game won in " + moves + " moves");
         JOptionPane.showMessageDialog(gui, 
                 "You solved the puzzle in " + moves + " moves.", 
                 "Congratulations!", 

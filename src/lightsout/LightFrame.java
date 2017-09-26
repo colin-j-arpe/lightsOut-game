@@ -9,12 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import static java.lang.Integer.parseInt;
-//import java.awt.event.KeyEvent;
-//import java.io.IOException;
 import java.util.Random;
-//import java.util.logging.Level;
-//import java.util.logging.Logger;
-//import javax.imageio.ImageIO;
 
 /**
  *
@@ -31,20 +26,15 @@ public class LightFrame extends JFrame  {
     
     public LightFrame() {
         super("lightsOut!");
-System.out.println("start constructor");
-        
         setSize(500,300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
         newBoard();
-        
-System.out.println("end constructor");
     }
     
     public void newBoard()   {
         thisGame = new LightGame (this, height, width);
-
         gameWindow = new JPanel();
+
         thisMenu = new MenuPanel(this);
         setJMenuBar(thisMenu.menuBar);
 
@@ -64,12 +54,8 @@ System.out.println("end constructor");
     }
     
     public void restart()   {
-//        LightFrame newGame = new LightFrame();
         remove(gameWindow);
         newBoard();
-//        thisGame = new LightGame (this, height, width);
-//        thisFrame.thisBoard = new BoardPanel (height, width, thisFrame.thisGame.btnStates);
-//        gameWindow.add(thisFrame.thisBoard, BorderLayout.CENTER);
     }
 }
 
@@ -105,7 +91,11 @@ class MenuPanel extends JPanel implements ActionListener  {
         }
         gameMenu.add(subMenu);
 
-//        subMenu = new JMenu("Game style", KeyEvent.VK_G);
+//      to come: game style selection, help menu
+        subMenu = new JMenu("Game style");
+        subMenu.setMnemonic(KeyEvent.VK_S);
+        gameMenu = new JMenu("Help");
+        gameMenu.setMnemonic(KeyEvent.VK_H);
 
         add(menuBar);
     }
@@ -119,12 +109,8 @@ class MenuPanel extends JPanel implements ActionListener  {
             String[] dimensions = selection.split("x");
             thisFrame.height = parseInt(dimensions[1]);
             thisFrame.width = parseInt(dimensions[0]);
-System.out.println(selection);
-//            thisFrame.gameWindow.remove(thisFrame.thisBoard);
-System.out.println("here");
             thisFrame.restart();
         }
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 
