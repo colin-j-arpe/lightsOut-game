@@ -7,13 +7,13 @@ package lightsout;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.io.IOException;
+import java.awt.event.*;
+//import java.awt.event.KeyEvent;
+//import java.io.IOException;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
+//import javax.imageio.ImageIO;
 
 /**
  *
@@ -21,13 +21,15 @@ import javax.imageio.ImageIO;
  */
 public class LightFrame extends JFrame  {
     LightGame thisGame = new LightGame (this);
-    MenuPanel thisMenu = new MenuPanel();
+    MenuPanel thisMenu = new MenuPanel(this);
     BoardPanel thisBoard = new BoardPanel (thisGame.HEIGHT, thisGame.WIDTH, thisGame.btnStates);
+    
     
     public LightFrame() {
         super("lightsOut!");
         setSize(500,300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setJMenuBar(thisMenu.menuBar);
         
         JPanel gameWindow = new JPanel();
         BorderLayout windowLayout = new BorderLayout();
@@ -46,10 +48,10 @@ public class LightFrame extends JFrame  {
     }
 }
 
-class MenuPanel extends JPanel  {
+class MenuPanel extends JPanel implements ActionListener  {
     JMenuBar menuBar = new JMenuBar();
     
-    public MenuPanel() {
+    public MenuPanel(LightFrame frame) {
         super();
         FlowLayout menuLayout = new FlowLayout(FlowLayout.LEFT);
         setLayout(menuLayout);
@@ -81,10 +83,14 @@ class MenuPanel extends JPanel  {
         subMenu.add(menuItem);
         gameMenu.add(subMenu);
 
-        subMenu = new JMenu("Game style");
-        subMenu.setMnemonic(KeyEvent.VK_G);
+//        subMenu = new JMenu("Game style", KeyEvent.VK_G);
 
         add(menuBar);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent event) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 
@@ -113,6 +119,7 @@ class BoardPanel extends JPanel {
                 nextBtn.putClientProperty("column", j);
 //                nextBtn.setContentAreaFilled(false);
 //                nextBtn.setIcon(imgOn);
+                nextBtn.setEnabled(true);
                 add(nextBtn);
                 buttons[i][j] = nextBtn;
             }
