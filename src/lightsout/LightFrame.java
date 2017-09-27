@@ -6,10 +6,16 @@
 package lightsout;
 
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import static java.lang.Integer.parseInt;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -72,11 +78,8 @@ public class LightFrame extends JFrame  {
     }
     
     public void showAbout() {
-        JOptionPane.showMessageDialog(this,
-                "Colin J. Arpe made this game.\n"
-                        + "You should go look at his portfolio at\n"
-                        + "\thttp://thegreenranger.us\n"
-                        + "then hire him.", 
+        JOptionPane.showMessageDialog(this, 
+                new aboutText("<html><body>Colin J. Arpe made this game.<br>You should go look at his portfolio at<br>&emsp<a href=\"http://thegreenranger.us\">thegreenranger.us</a><br>then hire him.</body></html>"),
                 "lightsAbOut!", JOptionPane.PLAIN_MESSAGE);
     }
 }
@@ -183,5 +186,28 @@ class BoardPanel extends JPanel {
                 buttons[i][j] = nextBtn;
             }
         }
+    }
+}
+    
+class aboutText extends JEditorPane  {
+
+    public aboutText(String content)   {
+        super("text/html", content);
+        setEditable(false);
+        addHyperlinkListener(new HyperlinkListener()    {
+            @Override
+            public void hyperlinkUpdate(HyperlinkEvent event)   {
+                if (event.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED))    {
+                    try {
+                        URI address = new URI(event.getURL().toString());
+                        Desktop.getDesktop().browse(address);
+                    } catch (IOException ex) {
+                        Logger.getLogger(BoardPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (URISyntaxException ex) {
+                        Logger.getLogger(aboutText.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
     }
 }
