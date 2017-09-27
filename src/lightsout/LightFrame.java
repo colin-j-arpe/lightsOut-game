@@ -57,6 +57,28 @@ public class LightFrame extends JFrame  {
         remove(gameWindow);
         newBoard();
     }
+    
+    public void showInstructions()  {
+        JOptionPane.showMessageDialog(this, 
+                "lightsOut! is a simple and infuriating game.\n\n"
+                        + "You begin with a grid of buttons, some turned on, some turned off.\n"
+                        + "Red represents ON.  The object is to turn them all off.  Each time\n"
+                        + "you click a button, the button will switch its state: if it was on,\n"
+                        + "it will turn off, and vice versa.  In addition, all of the adjacent\n"
+                        + "buttons above, below, to the left and right will also switch their\n"
+                        + "current state.  Use the Game menu to choose from five different board\n"
+                        + "sizes.  And try not to break your computer in a frustrated rage.", 
+                "Instructions", JOptionPane.PLAIN_MESSAGE);
+    }
+    
+    public void showAbout() {
+        JOptionPane.showMessageDialog(this,
+                "Colin J. Arpe made this game.\n"
+                        + "You should go look at his portfolio at\n"
+                        + "\thttp://thegreenranger.us\n"
+                        + "then hire him.", 
+                "lightsAbOut!", JOptionPane.PLAIN_MESSAGE);
+    }
 }
 
 class MenuPanel extends JPanel implements ActionListener  {
@@ -124,9 +146,9 @@ class MenuPanel extends JPanel implements ActionListener  {
         if (selection.equals("New game"))
                 thisFrame.restart();
         else if (selection.equals("Instructions"))
-                showInstructions();
+                thisFrame.showInstructions();
         else if (selection.equals("About"))
-                showAbout();
+                thisFrame.showAbout();
         else    {
             String[] dimensions = selection.split("x");
             thisFrame.height = parseInt(dimensions[1]);
